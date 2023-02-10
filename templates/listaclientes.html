@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Lista de Clientes {% endblock %}</h1>
+    {% for clientes in clientes %}
+        <a href="#">
+        </a>
+        <span class="badge badge-primary">{{ clientes['Nome'] }}</span>
+        <span class="badge badge-primary">{{ clientes['Sobrenome'] }}</span>
+        <span class="badge badge-primary">{{ clientes['CPF'] }}</span>
+        <hr>
+    {% endfor %}
+{% endblock %}

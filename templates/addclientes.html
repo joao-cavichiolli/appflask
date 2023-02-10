@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Adicionar Nome Cliente {% endblock %}</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome"
+               placeholder="Insira o Nome" class="form-control"
+               value="{{ request.form['nome'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="sobrenome">Sobrenome</label>
+        <input type="text" name="sobrenome"
+               placeholder="Insira o Sobrenome" class="form-control"
+               value="{{ request.form['sobrenome'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="cpf">CPF</label>
+        <input type="text" name="cpf"
+               placeholder="Insira o CPF" class="form-control"
+               value="{{ request.form['cpf'] }}"></input>
+    </div>
+
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</form>
+{% endblock %}
