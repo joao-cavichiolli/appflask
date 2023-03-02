@@ -4,7 +4,7 @@ from flask import Flask,render_template,request,url_for,redirect
 import sqlite3 
 from flask_mysqldb import MySQL
 
-app = Flask(__name__)
+app = Flask(__nam
 
 ## Criar a string do conexão do MYSQL
 
