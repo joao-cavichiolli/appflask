@@ -2,12 +2,21 @@
 
 from flask import Flask,render_template,request,url_for,redirect
 import sqlite3 
-from flask import jsonify # para retornar em formato JSON
+from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
-app.config['JSON_SORT_KEYS']=False
-app.config['JSON_AS_ASCII'] = False
+## Criar a string do conexão do MYSQL
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'python'
+app.config['MYSQL_PASSWORD'] = 'python123'
+app.config["MYSQL_DB"] = 'banco01'
+
+mysql = MySQL(app)
+
+
+
 
 ## Routes ou rotas que são caminhos da aplicação web
 
@@ -53,9 +62,10 @@ def clientes():
 
 @app.route('/listaclientes',methods=('GET',"POST"))
 def listaclientes():
-    conn = get_db_connection()
-    clientesback = conn.execute('select * from cadastro_clientes').fetchall()
-    conn.close()
+    cursor = mysql.connection.cursor()
+    cursor.execute('select * from clientes')
+    clientesback = cursor.fetchone()
+    cursor.close()
     return render_template('listaclientes.html',clientes=clientesback) # interliga o front com o back
 
 
@@ -65,13 +75,10 @@ def addclientes():
         nome = request.form['nome']
         sobrenome = request.form['sobrenome']
         cpf = request.form['cpf']
-        conn= get_db_connection()
-        conn.execute('insert into cadastro_clientes (nome,sobrenome,cpf) values (?,?,?)',(nome,sobrenome,cpf))
-        conn.commit()
-        conn.close()
+        cursor = mysql.connection.cursor()
+        cursor.execute('insert into clientes (nome,sobrenome,cpf) values (?,?,?)',(nome,sobrenome,cpf))
+        mysql.connection.commit()
+        cursor.close()
         return redirect(url_for('index'))
     return render_template('addclientes.html')
 
-@app.route('/enderecos/<string:nome>,<string:end>')
-def hello(nome,end):
-    return jsonify({'Nome':nome,"Endereco":end})
